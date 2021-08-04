@@ -18,6 +18,7 @@ import javax.persistence.Id;
 @Entity
 public class User {
 
+    //TODO: implement validation
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer userId;

@@ -21,6 +21,7 @@ public class UserController {
     @Autowired
     UserServices userServices;
 
+    //go to welcome page
     @GetMapping({"/","/welcome"})
     public String welcome(Model model)
     {
@@ -31,6 +32,7 @@ public class UserController {
     }
 
 
+    // go to login
     @GetMapping("/login")
     public String loginPage()
     {
@@ -45,6 +47,8 @@ public class UserController {
         return new User();
     }
 
+    //TODO: implement validation
+    //process login before going to success page
     @PostMapping("/login/process")
     public String processLogin(@ModelAttribute("theuser") User user, Model model)
     {

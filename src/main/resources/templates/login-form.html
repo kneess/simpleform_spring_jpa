@@ -9,10 +9,12 @@
 <form th:action="@{/simpleforms/login/process}" method="post" th:object="${theuser}">
 
     <input type="text" th:field="*{email}" th:value="${email}" />
+    <!--    validation not yet implemented-->
     <p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Can't be null</p>
     <br>
 
     <input type="text" th:field="*{password}" th:value="${password}" />
+    <!--    validation not yet implemented-->
     <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Can't be null</p>
 
     <input type="submit" name="Submit">
