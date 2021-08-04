@@ -6,11 +6,13 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
 import java.util.Date;
 
 @Controller
@@ -47,17 +49,24 @@ public class UserController {
         return new User();
     }
 
-    //TODO: implement validation
     //process login before going to success page
     @PostMapping("/login/process")
-    public String processLogin(@ModelAttribute("theuser") User user, Model model)
+    public String processLogin(@ModelAttribute("theuser") @Valid User user, BindingResult bindingResult, Model model)
     {
+        //checking if email or password meet validation requirements
+        if(bindingResult.hasErrors())
+        {
+            log.warn(bindingResult.getAllErrors().toString());
+            return "login-form";
+        }
+
+        //userservice -> userrepository to get user by email
          User foundUser = userServices.getUserByEmail(user.getEmail());
-         log.warn(foundUser.toString());
 
          //if user is found
          if(foundUser != null)
          {
+             log.warn(foundUser.toString());
              String fullname = foundUser.getFirstName() + " "+ foundUser.getLastName();
              model.addAttribute("username", fullname);
              //check if password matches

@@ -11,6 +11,7 @@ public class UserServices {
     @Autowired
     IUserRepo userRepo;
 
+    //userrepo querying db to find user by email
     public User getUserByEmail(String email)
     {
         User foundUser = userRepo.findUserByEmail(email);
